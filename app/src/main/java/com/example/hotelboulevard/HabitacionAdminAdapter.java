@@ -32,9 +32,17 @@ public class HabitacionAdminAdapter extends FirestoreRecyclerAdapter<Habitacion,
     @Override
     public long getItemId(int position) {
         // Asegúrate de que la posición es válida antes de acceder al snapshot
-        if (position >= 0 && position < getItemCount()) {
-            // Usamos el hashcode del ID del documento de Firestore como ID estable
-            return getSnapshots().getSnapshot(position).getId().hashCode();
+        try {
+            if (position >= 0 && position < getItemCount() && getSnapshots() != null) {
+                DocumentSnapshot snapshot = getSnapshots().getSnapshot(position);
+                if (snapshot != null && snapshot.exists()) {
+                    // Usamos el hashcode del ID del documento de Firestore como ID estable
+                    return snapshot.getId().hashCode();
+                }
+            }
+        } catch (Exception e) {
+            // Si hay algún error, devolver NO_ID de forma segura
+            return RecyclerView.NO_ID;
         }
         // Devuelve un ID inválido si la posición no es válida
         return RecyclerView.NO_ID;
@@ -43,6 +51,10 @@ public class HabitacionAdminAdapter extends FirestoreRecyclerAdapter<Habitacion,
     // 3. onBindViewHolder: Conecta los datos (modelo) con las Vistas (ViewHolder)
     @Override
     protected void onBindViewHolder(@NonNull HabitacionViewHolder holder, int position, @NonNull Habitacion model) {
+        // Protección adicional: verificar que la posición sigue siendo válida
+        if (position < 0 || position >= getItemCount()) {
+            return;
+        }
 
         // Asignamos los datos del modelo a las vistas
         holder.tvNombre.setText(model.getNombre());
@@ -63,14 +75,22 @@ public class HabitacionAdminAdapter extends FirestoreRecyclerAdapter<Habitacion,
         }
 
         // --- Configuración de Clicks ---
-        // Necesitamos la 'position' para obtener el DocumentSnapshot
+        // Limpiar listeners previos para evitar clicks duplicados
+        holder.btnEditar.setOnClickListener(null);
+        holder.btnEliminar.setOnClickListener(null);
 
         holder.btnEditar.setOnClickListener(v -> {
             // Obtenemos la posición ACTUAL en el momento del clic
             int currentPosition = holder.getBindingAdapterPosition();
 
-            if (listener != null && currentPosition != RecyclerView.NO_POSITION) {
-                listener.onEditarClick(getSnapshots().getSnapshot(currentPosition));
+            if (listener != null && currentPosition != RecyclerView.NO_POSITION 
+                    && currentPosition >= 0 && currentPosition < getItemCount()) {
+                try {
+                    listener.onEditarClick(getSnapshots().getSnapshot(currentPosition));
+                } catch (Exception e) {
+                    // Manejar cualquier error de forma segura
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -78,8 +98,14 @@ public class HabitacionAdminAdapter extends FirestoreRecyclerAdapter<Habitacion,
             // Obtenemos la posición ACTUAL en el momento del clic
             int currentPosition = holder.getBindingAdapterPosition();
 
-            if (listener != null && currentPosition != RecyclerView.NO_POSITION) {
-                listener.onEliminarClick(getSnapshots().getSnapshot(currentPosition));
+            if (listener != null && currentPosition != RecyclerView.NO_POSITION 
+                    && currentPosition >= 0 && currentPosition < getItemCount()) {
+                try {
+                    listener.onEliminarClick(getSnapshots().getSnapshot(currentPosition));
+                } catch (Exception e) {
+                    // Manejar cualquier error de forma segura
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -131,5 +157,21 @@ public class HabitacionAdminAdapter extends FirestoreRecyclerAdapter<Habitacion,
     // Método para que la Activity "escuche" los clicks
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    // Override de onDataChanged para manejar mejor los cambios de Firestore
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        // Este método se llama cuando los datos de Firestore cambian
+        // Puede ser útil para debugging o para actualizar la UI
+    }
+
+    // Override de onError para manejar errores de Firestore
+    @Override
+    public void onError(@NonNull com.google.firebase.firestore.FirebaseFirestoreException e) {
+        super.onError(e);
+        // Log del error para debugging
+        android.util.Log.e("HabitacionAdapter", "Error al cargar datos de Firestore", e);
     }
 }

@@ -2,6 +2,8 @@ package com.example.hotelboulevard; // Reemplaza con tu paquete
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -84,9 +86,19 @@ public class ListarHabitacionesAdminActivity extends AppCompatActivity
         // 4. Inicializamos el Adaptador
         adapter = new HabitacionAdminAdapter(options);
 
-        // 5. Configuramos el RecyclerView
+        // 5. Configuramos el RecyclerView con configuraciones más estables
         recyclerViewHabitaciones.setHasFixedSize(true);
-        recyclerViewHabitaciones.setLayoutManager(new LinearLayoutManager(this));
+        
+        // Configurar el LayoutManager con estabilidad mejorada
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setItemPrefetchEnabled(true); // Mejora el rendimiento
+        recyclerViewHabitaciones.setLayoutManager(layoutManager);
+        
+        // Configurar pool de vistas para mejor rendimiento
+        recyclerViewHabitaciones.setItemViewCacheSize(20);
+        recyclerViewHabitaciones.setDrawingCacheEnabled(true);
+        recyclerViewHabitaciones.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        
         recyclerViewHabitaciones.setAdapter(adapter);
 
         // 6. Asignamos el listener para los clics
@@ -134,22 +146,26 @@ public class ListarHabitacionesAdminActivity extends AppCompatActivity
                 .show(); // ¡No olvides mostrarlo!
     }
     private void eliminarHabitacionDeFirestore(String id) {
-        if (id == null) return;
+        if (id == null || isFinishing() || isDestroyed()) return;
 
         db.collection("habitaciones").document(id).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // ¡Éxito!
-                        Toast.makeText(ListarHabitacionesAdminActivity.this, "Habitación eliminada", Toast.LENGTH_SHORT).show();
+                        // Verificar que la Activity sigue activa antes de mostrar el Toast
+                        if (!isFinishing() && !isDestroyed()) {
+                            Toast.makeText(ListarHabitacionesAdminActivity.this, "Habitación eliminada", Toast.LENGTH_SHORT).show();
+                        }
                         // El FirestoreRecyclerAdapter actualizará la lista automáticamente
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ListarHabitacionesAdminActivity.this, "Error al eliminar la habitación", Toast.LENGTH_SHORT).show();
-                        Log.e("Firestore", "Error al eliminar", e);
+                        if (!isFinishing() && !isDestroyed()) {
+                            Toast.makeText(ListarHabitacionesAdminActivity.this, "Error al eliminar la habitación", Toast.LENGTH_SHORT).show();
+                            Log.e("Firestore", "Error al eliminar", e);
+                        }
                     }
                 });
     }
@@ -161,16 +177,64 @@ public class ListarHabitacionesAdminActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        // Comenzar a escuchar en onStart en lugar de onResume
+        // para un mejor manejo del ciclo de vida
         if (adapter != null) {
-            adapter.startListening(); // El adaptador empieza a "escuchar" cambios
+            Log.d("ListarHabitaciones", "Adapter starting to listen in onStart");
+            adapter.startListening();
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        // Detener la escucha en onStop para liberar recursos
         if (adapter != null) {
-            adapter.stopListening(); // El adaptador deja de "escuchar"
+            Log.d("ListarHabitaciones", "Adapter stopping listening in onStop");
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Asegurarse de que el RecyclerView esté en buen estado
+        if (recyclerViewHabitaciones != null && adapter != null) {
+            Log.d("ListarHabitaciones", "Refreshing RecyclerView in onResume");
+            
+            // Usar un pequeño retraso para asegurar que la UI está lista
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                if (recyclerViewHabitaciones != null && !isDestroyed() && !isFinishing()) {
+                    try {
+                        // Notificar al adapter que puede haber cambios
+                        recyclerViewHabitaciones.getRecycledViewPool().clear();
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        Log.e("ListarHabitaciones", "Error refreshing RecyclerView", e);
+                    }
+                }
+            }, 50);
+        }
+    }
+
+    // El método onPause() ya no es necesario para startListening/stopListening
+    // pero lo dejamos por si hay otra lógica
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("ListarHabitaciones", "onPause called");
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Limpiar recursos cuando se destruye la Activity
+        if (adapter != null) {
+            try {
+                adapter.stopListening();
+            } catch (Exception e) {
+                Log.e("ListarHabitaciones", "Error stopping adapter on destroy", e);
+            }
         }
     }
 }

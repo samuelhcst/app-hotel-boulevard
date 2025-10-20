@@ -60,6 +60,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
     private String habitacionId = null;
     private boolean isEditMode = false;
     private String imagenUrlActual = null; // Para guardar la URL si estamos editando
+    private String textoBotonOriginal = ""; // Para guardar el texto original del botón
     // ------------------------------------------
 
     @Override
@@ -116,8 +117,14 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                 return;
             }
             isSaving = true; // Marcar como guardando
-            // (Mostrar ProgressBar aquí si lo tienes)
-            // progressBar.setVisibility(View.VISIBLE);
+            
+            // Guardar el texto original del botón si no lo hemos guardado aún
+            if (textoBotonOriginal.isEmpty()) {
+                textoBotonOriginal = btnGuardar.getText().toString();
+            }
+            
+            // Cambiar el texto para indicar que está procesando
+            btnGuardar.setText(isEditMode ? "Actualizando..." : "Guardando...");
             btnGuardar.setEnabled(false); // Deshabilitar botón
 
             if (isEditMode) {
@@ -136,6 +143,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
             // Cambiamos el UI
             toolbar.setTitle("Editar Habitación");
             btnGuardar.setText("Actualizar Habitación");
+            textoBotonOriginal = "Actualizar Habitación"; // Guardar texto original
 
             // Cargamos los datos
             loadHabitacionData();
@@ -145,6 +153,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
             isEditMode = false;
             toolbar.setTitle("Crear Nueva Habitación");
             btnGuardar.setText("Guardar Habitación");
+            textoBotonOriginal = "Guardar Habitación"; // Guardar texto original
         }
     }
 
@@ -204,9 +213,15 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
 
     private void guardarNuevaHabitacion() {
         // 1. Validaciones
-        if (!validarCampos()) return;
+        if (!validarCampos()) {
+            // Rehabilitar el botón si la validación falla
+            restaurarBotonGuardar();
+            return;
+        }
 
         if (imagenUri == null) {
+            // Rehabilitar el botón si no hay imagen
+            restaurarBotonGuardar();
             Toast.makeText(this, "Por favor, seleccione una imagen principal", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -241,6 +256,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                             urlImagenPrincipal = resultData.get("url").toString().replace("http://", "https://");
                         } else {
                             // Si falla todo
+                            restaurarBotonGuardar();
                             Log.e("Cloudinary", "No se encontró 'url' ni 'secure_url' en la respuesta");
                             Toast.makeText(GestionarHabitacionActivity.this, "Error: No se pudo obtener la URL de la imagen", Toast.LENGTH_SHORT).show();
                             return; // No continuar
@@ -254,8 +270,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                     // --- ¡Y AQUÍ! ---
                     @Override
                     public void onError(String requestId, ErrorInfo error) {
-                        isSaving = false; // <-- Resetear
-                        btnGuardar.setEnabled(true); // <-- Rehabilitar
+                        restaurarBotonGuardar();
                         Log.e("Cloudinary", "Error al subir: " + error.getDescription());
                         Toast.makeText(GestionarHabitacionActivity.this, "Error al subir imagen", Toast.LENGTH_SHORT).show();
                         // (Ocultar ProgressBar)
@@ -274,7 +289,11 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
      * ¡NUEVO! Lógica para actualizar una habitación existente.
      */
     private void actualizarHabitacion() {
-        if (!validarCampos()) return;
+        if (!validarCampos()) {
+            // Rehabilitar el botón si la validación falla
+            restaurarBotonGuardar();
+            return;
+        }
 
         // (Mostrar ProgressBar)
         Toast.makeText(this, "Actualizando...", Toast.LENGTH_LONG).show();
@@ -303,6 +322,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                             } else if (resultData.containsKey("url")) {
                                 nuevaUrl = resultData.get("url").toString().replace("http://", "https://");
                             } else {
+                                restaurarBotonGuardar();
                                 Log.e("Cloudinary", "No se encontró URL en la respuesta");
                                 Toast.makeText(GestionarHabitacionActivity.this, "Error al obtener URL", Toast.LENGTH_SHORT).show();
                                 return;
@@ -316,8 +336,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                         // --- ¡Y AQUÍ! ---
                         @Override
                         public void onError(String requestId, ErrorInfo error) {
-                            isSaving = false; // <-- Resetear
-                            btnGuardar.setEnabled(true); // <-- Rehabilitar
+                            restaurarBotonGuardar();
                             Toast.makeText(GestionarHabitacionActivity.this, "Error al subir nueva imagen", Toast.LENGTH_SHORT).show();
                             // (Ocultar ProgressBar)
                             // progressBar.setVisibility(View.GONE);
@@ -344,8 +363,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
         // Guardamos en la colección "habitaciones"
         db.collection("habitaciones").add(habitacion)
                 .addOnSuccessListener(documentReference -> {
-                    isSaving = false; // <-- Resetear
-                    btnGuardar.setEnabled(true); // <-- Rehabilitar
+                    restaurarBotonGuardar();
                     Toast.makeText(GestionarHabitacionActivity.this, "Habitación guardada", Toast.LENGTH_SHORT).show();
                     //finish(); // Volver a la lista
                     // Creamos un Intent para ir DIRECTAMENTE a la lista
@@ -360,8 +378,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                     finish(); // Cerramos esta pantalla (el formulario) AHORA SÍ.
                 })
                 .addOnFailureListener(e -> {
-                    isSaving = false; // <-- Resetear
-                    btnGuardar.setEnabled(true); // <-- Rehabilitar
+                    restaurarBotonGuardar();
                     Toast.makeText(GestionarHabitacionActivity.this, "Error al guardar", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -378,6 +395,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
         // Usamos .document(id).set() para sobrescribir el documento
         db.collection("habitaciones").document(habitacionId).set(habitacion)
                 .addOnSuccessListener(aVoid -> {
+                    restaurarBotonGuardar();
                     Toast.makeText(GestionarHabitacionActivity.this, "Habitación actualizada", Toast.LENGTH_SHORT).show();
                     //finish(); // Volver a la lista
                     // Creamos un Intent para ir DIRECTAMENTE a la lista
@@ -392,8 +410,7 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
                     finish(); // Cerramos esta pantalla (el formulario) AHORA SÍ.
                 })
                 .addOnFailureListener(e -> {
-                    isSaving = false; // <-- Resetear
-                    btnGuardar.setEnabled(true); // <-- Rehabilitar
+                    restaurarBotonGuardar();
                     Toast.makeText(GestionarHabitacionActivity.this, "Error al actualizar", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -451,6 +468,17 @@ public class GestionarHabitacionActivity extends AppCompatActivity {
         // (La galería 'imagenes' sigue vacía por ahora)
 
         return habitacion;
+    }
+
+    /**
+     * Método helper para restaurar el estado del botón Guardar
+     */
+    private void restaurarBotonGuardar() {
+        isSaving = false;
+        btnGuardar.setEnabled(true);
+        if (!textoBotonOriginal.isEmpty()) {
+            btnGuardar.setText(textoBotonOriginal);
+        }
     }
 
     private void setupTipoDropdown() {
