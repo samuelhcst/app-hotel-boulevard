@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Parte superior: Imagen y Favorito -->
+        <ImageView
+            android:id="@+id/roomImageView"
+            android:layout_width="0dp"
+            android:layout_height="200dp" 
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" 
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="Imagen de la habitación" />
+
+        <ImageView
+            android:id="@+id/favoriteIconImageView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/ic_menu_save"
+            app:tint="@android:color/white"
+            app:layout_constraintTop_toTopOf="@+id/roomImageView"
+            app:layout_constraintEnd_toEndOf="@+id/roomImageView"
+            android:contentDescription="Marcar como favorito" />
+
+        <!-- Parte inferior: Detalles de la habitación -->
+        <TextView
+            android:id="@+id/roomNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Nombre de la Habitación"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/roomImageView"
+            app:layout_constraintEnd_toStartOf="@+id/ratingTextView" />
+
+        <TextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="4.6"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:drawableStartCompat="@android:drawable/btn_star_big_on" 
+            app:drawableTint="@color/design_default_color_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/roomNameTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/roomNameTextView"/>
+
+        <TextView
+            android:id="@+id/specsTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="32m² • 1 Cama Queen"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintStart_toStartOf="@+id/roomNameTextView"
+            app:layout_constraintEnd_toEndOf="@+id/ratingTextView"
+            app:layout_constraintTop_toBottomOf="@+id/roomNameTextView" />
+
+        <LinearLayout
+            android:id="@+id/serviceTagsLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/specsTextView"
+            app:layout_constraintTop_toBottomOf="@+id/specsTextView"
+            app:layout_constraintEnd_toEndOf="@+id/specsTextView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tag_background_placeholder" 
+                android:paddingStart="8dp" android:paddingEnd="8dp" android:paddingTop="4dp" android:paddingBottom="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="Vista al jardín"
+                android:textSize="12sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tag_background_placeholder"
+                android:paddingStart="8dp" android:paddingEnd="8dp" android:paddingTop="4dp" android:paddingBottom="4dp"
+                android:text="Escritorio"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="$180 / noche"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/serviceTagsLayout"
+            app:layout_constraintTop_toBottomOf="@+id/serviceTagsLayout"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/selectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="@+id/specsTextView"
+            app:layout_constraintTop_toTopOf="@+id/priceTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/priceTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background_main"
+    android:padding="16dp"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/logoboulevard"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/email_text_input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:contentDescription="Logo del Hotel Boulevard" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:hintTextColor="@color/boulevard_gris_medio"
+        app:boxStrokeColor="@color/boulevard_dorado"
+        app:startIconDrawable="@android:drawable/ic_dialog_email"
+        app:startIconTint="@color/boulevard_dorado"
+        app:layout_constraintBottom_toTopOf="@+id/password_text_input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_logo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/boulevard_negro_elegante"
+            android:backgroundTint="@color/boulevard_gris_suave"
+            android:textColorHint="@color/boulevard_gris_medio" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:hintTextColor="@color/boulevard_gris_medio"
+        app:boxStrokeColor="@color/boulevard_dorado"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/boulevard_dorado"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_text_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColor="@color/boulevard_negro_elegante"
+            android:backgroundTint="@color/boulevard_gris_suave"
+            android:textColorHint="@color/boulevard_gris_medio" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/gradient_button_primary"
+        app:backgroundTint="@null" 
+        android:text="Iniciar Sesión"
+        android:textColor="@color/boulevard_blanco_puro"
+        app:layout_constraintBottom_toTopOf="@+id/forgot_password_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout" />
+
+    <TextView
+        android:id="@+id/forgot_password_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textColor="@color/boulevard_gris_medio"
+        app:layout_constraintBottom_toTopOf="@+id/register_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
+    <TextView
+        android:id="@+id/register_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes una cuenta? Regístrate aquí"
+        android:textColor="@color/boulevard_gris_medio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password_textview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

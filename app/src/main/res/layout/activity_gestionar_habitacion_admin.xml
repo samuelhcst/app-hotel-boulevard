@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    tools:context=".GestionarHabitacionActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:elevation="2dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_gestionar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="#666666"
+            app:title="Gestionar Habitación"
+            app:titleTextColor="#333333" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre de la habitación"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Descripción"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_descripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:gravity="top" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Tipo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                <AutoCompleteTextView
+                    android:id="@+id/act_tipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Precio (ej: 80.00)"
+                    android:layout_marginEnd="8dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_precio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Cantidad Total"
+                    android:layout_marginStart="8dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_cantidad_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Imagen Principal"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"/>
+            <ImageView
+                android:id="@+id/iv_imagen_preview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:background="#E0E0E0"
+                android:src="@drawable/ic_hotel_placeholder"
+                android:contentDescription="Vista previa de la imagen principal"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_seleccionar_imagen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Seleccionar Imagen"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Servicios y Comodidades"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_wifi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Wi-Fi de alta velocidad" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_aire_acondicionado"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Aire acondicionado" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_smart_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Smart TV con streaming" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_minibar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Minibar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_caja_seguridad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Caja de seguridad" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_servicio_habitacion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Servicio a la habitación 24h" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_bano_privado"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Baño privado de lujo" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_balcon_privado"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Balcón privado" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_guardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:text="Guardar Habitación"
+                android:padding="12dp"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

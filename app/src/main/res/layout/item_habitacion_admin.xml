@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <!-- 🔹 INICIO DE LA CORRECCIÓN: Jerarquía aplanada para evitar desbordamiento -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_habitacion_imagen"
+            android:layout_width="118dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_hotel_placeholder"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.RoundedImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_habitacion_nombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_habitacion_imagen"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Suite Presidencial" />
+
+        <TextView
+            android:id="@+id/tv_habitacion_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintStart_toStartOf="@id/tv_habitacion_nombre"
+            app:layout_constraintTop_toBottomOf="@id/tv_habitacion_nombre"
+            tools:text="$150 / noche" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_editar"
+            style="?attr/materialButtonTonalStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar"
+            android:textSize="12sp"
+            app:icon="@drawable/ic_edit"
+            app:iconSize="18dp"
+            android:textColor="@color/primary"
+            app:iconTint="@color/primary"
+            app:backgroundTint="@color/primary_10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_eliminar"
+            style="?attr/materialButtonTonalStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Eliminar"
+            android:textSize="12sp"
+            app:icon="@drawable/ic_delete"
+            app:iconSize="18dp"
+            android:textColor="@color/red_500"
+            app:iconTint="@color/red_500"
+            app:backgroundTint="@color/red_10"
+            app:layout_constraintStart_toEndOf="@id/btn_editar"
+            app:layout_constraintTop_toTopOf="@id/btn_editar"
+            app:layout_constraintBottom_toBottomOf="@id/btn_editar"/>
+
+        <!-- Este Barrier asegura que el texto no se superponga con los botones si es muy largo -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="btn_editar,btn_eliminar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 🔹 FIN DE LA CORRECCIÓN -->
+</com.google.android.material.card.MaterialCardView>

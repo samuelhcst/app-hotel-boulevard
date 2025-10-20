@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:strokeColor="@color/boulevard_gris_medio"
+    app:strokeWidth="1dp"
+    app:cardBackgroundColor="@color/boulevard_blanco_puro">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/reservationImageView"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/reservationTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Nombre de habitación"
+            android:textStyle="bold"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:layout_constraintStart_toEndOf="@id/reservationImageView"
+            app:layout_constraintTop_toTopOf="@id/reservationImageView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/reservationCheckInTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="6dp"
+            android:text="Check-in: 22/09/2025"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            app:layout_constraintStart_toEndOf="@id/reservationImageView"
+            app:layout_constraintTop_toBottomOf="@id/reservationTitleTextView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/reservationCheckOutTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="2dp"
+            android:text="Check-out: 23/09/2025"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            app:layout_constraintStart_toEndOf="@id/reservationImageView"
+            app:layout_constraintTop_toBottomOf="@id/reservationCheckInTextView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/reservationPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="$0 / noche"
+            android:textStyle="bold"
+            android:textColor="@color/boulevard_blanco_puro"
+            android:background="@drawable/bg_price_badge"
+            app:layout_constraintStart_toEndOf="@id/reservationImageView"
+            app:layout_constraintTop_toBottomOf="@id/reservationCheckOutTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

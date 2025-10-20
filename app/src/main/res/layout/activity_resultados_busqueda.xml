@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F8F8"
+    tools:context=".ResultadosBusquedaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F8F8F8"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_resultados"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="#333333"
+            app:title="Habitaciones Disponibles"
+            app:titleCentered="true"
+            app:titleTextColor="#333333"/> </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tu búsqueda"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#001F3F" />
+
+            <TextView
+                android:id="@+id/tv_resumen_busqueda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                tools:text="12 Dic - 15 Dic, 2 Adultos" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cambiar_busqueda"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Cambiar búsqueda"
+                android:textAllCaps="false"
+                android:textColor="#D4AF37"
+                android:minHeight="32dp" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_resultados"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_habitacion_resultado" />
+
+</LinearLayout>

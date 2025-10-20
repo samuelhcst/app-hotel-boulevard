@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.HotelBoulevard" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <!-- Theme for Splash Screen -->
+    <style name="Theme.HotelBoulevard.NoActionBar" parent="Theme.HotelBoulevard">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HotelBoulevard" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
+
+    <style name="ShapeAppearance.App.CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

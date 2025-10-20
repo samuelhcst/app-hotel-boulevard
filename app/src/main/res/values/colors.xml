@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores base de la app -->
+    <color name="primary">#007AFF</color>
+    <color name="primary_dark">#0056B3</color>
+    <color name="primary_10">#1A007AFF</color> <!-- 10% de opacidad -->
+
+    <color name="red_500">#D32F2F</color>
+    <color name="red_10">#1AD32F2F</color> <!-- 10% de opacidad -->
+
+    <!-- Colores de texto -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+
+    <!-- =============================================================== -->
+    <!-- NUEVA PALETA DE COLORES "BOULEVARD" AÑADIDA PARA CORREGIR ERRORES -->
+    <!-- =============================================================== -->
+
+    <!-- Colores de la marca "Boulevard" -->
+    <color name="boulevard_dorado">#C0A160</color>
+    <color name="boulevard_gris_carbon">#222222</color>
+    <color name="boulevard_negro_elegante">#1C1C1E</color>
+
+    <!-- Colores neutros y de UI -->
+    <color name="boulevard_blanco_puro">#FFFFFF</color>
+    <color name="boulevard_gris_suave">#F6F7F8</color>
+    <color name="boulevard_gris_medio">#8E8E93</color>
+    <color name="edit_text_border">#CCCCCC</color>
+
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "501638181963",
+    "project_id": "hotel-boulevard-d99bd",
+    "storage_bucket": "hotel-boulevard-d99bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501638181963:android:ecd31dc2d246a4d746c9ce",
+        "android_client_info": {
+          "package_name": "com.example.hotelboulevard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZjKbTpNKXk0rMygDW_vE-UK5FRJLLrLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

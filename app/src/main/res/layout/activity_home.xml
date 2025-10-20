@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8"
+    tools:context=".HomeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        android:background="#FF000000" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hotel Boulevard"
+                android:textColor="@android:color/white"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_welcome_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#E0E0E0"
+                android:textSize="18sp"
+                tools:text="Bienvenido, Samuel" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_form_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¡Disfruta tu estadía!"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#36454F"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_fecha_llegada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de Llegada"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calendar_today"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_fecha_llegada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_fecha_salida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Fecha de Salida"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calendar_today"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_fecha_salida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_huespedes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Huéspedes"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_group"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_huespedes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_buscar_disponibilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buscar Disponibilidad"
+                android:layout_marginTop="24dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#F8F8F8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
